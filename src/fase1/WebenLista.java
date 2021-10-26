@@ -4,7 +4,13 @@ import java.util.ArrayList;
 
 public class WebenLista {
 	private ArrayList<Web>lista;
-
+	
+	public ArrayList<Web> getLista() {
+		return lista;
+	}
+	public void setLista(ArrayList<Web> lista) {
+		this.lista = lista;
+	}
 	public WebenLista() {
 		this.lista=new ArrayList<Web>();
 	}
@@ -28,7 +34,7 @@ public class WebenLista {
 			if(this.lista.get(i).getIndex()==idJatorriWeba) {
 				this.lista.get(i).addEsteka(idHelburuWeba);
 			}
+			}
 		}
 	}
-}
 

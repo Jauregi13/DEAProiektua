@@ -8,12 +8,12 @@ public class Internet {
 	private static Internet nireInternet=null;
 	private WebenLista webList;
 	
-private Internet(WebenLista pwebList) {
-		this.webList=pwebList;
+private Internet() {
+		this.webList=new WebenLista();
 	}
-public static Internet getInstance(WebenLista pwebList){
+public static Internet getInstance(){
 	if(nireInternet==null) 
-		nireInternet=new Internet(pwebList);
+		nireInternet=new Internet();
 	return nireInternet;
 }
 	/**
@@ -22,12 +22,15 @@ public static Internet getInstance(WebenLista pwebList){
 	 * @throws FileNotFoundException 
 	 */
 	private void webakKargatu(String fitxIzena) throws FileNotFoundException {
-		Scanner sc = new Scanner(new File(fitxIzena));
+		File f=new File(fitxIzena);
+		Scanner sc = new Scanner(f);
         while(sc.hasNextLine()) {
         	String webberria=sc.nextLine();
-		String[] pfitxIzena=webberria.split("/r");
-		int index=Integer.parseInt(pfitxIzena[1]);
-		Web web= new Web(index,pfitxIzena[0]);
+		String[] parts=webberria.split("\\s+");
+		String in=parts[1];
+		System.out.println(in);
+		int index=Integer.parseInt(in);
+		Web web= new Web(index,parts[0]);
 		this.webList.webaErantsi(web);
         }
         sc.close();
@@ -39,10 +42,10 @@ public static Internet getInstance(WebenLista pwebList){
 	 * @throws FileNotFoundException 
 	 */
 	private void estekakKargatu(String fitxIzena) throws FileNotFoundException {
-		Scanner sc = new Scanner(new File("fitxIzena"));
+		Scanner sc = new Scanner(new File(fitxIzena));
         while(sc.hasNextLine()) {
         	String estberria=sc.nextLine();
-		String[] pfitxIzena=estberria.split("/r");
+		String[] pfitxIzena=estberria.split("\\s+");
 		int indexJatorri=Integer.parseInt(pfitxIzena[0]);
 		int indexHelmuga=Integer.parseInt(pfitxIzena[1]);
 		this.webList.estekaErantsi(indexJatorri, indexHelmuga);
@@ -57,10 +60,8 @@ public static Internet getInstance(WebenLista pwebList){
 	 * @throws FileNotFoundException 
 	 */
 	public void hasieratu(String webenFitxIzena, String estekenFitxIzena) throws FileNotFoundException {
-		WebenLista wbl= new WebenLista();
-		Internet inet=this.getInstance(wbl);
-		inet.webakKargatu(webenFitxIzena);
-		inet.estekakKargatu(estekenFitxIzena);
+		this.webakKargatu(webenFitxIzena);
+		this.estekakKargatu(estekenFitxIzena);
         
 	}
 	/**
@@ -69,6 +70,18 @@ public static Internet getInstance(WebenLista pwebList){
 	 * @param s: hitzari dagokion stringa
 	 */
 	 public void webBilatzailea(String s) {
-		 
+		 System.out.println(s+":");
+		 for(int i=0;i<this.webList.getLista().size();i++) {
+			 Web w=this.webList.getLista().get(i);
+			 for (int j=0;j<w.getGakoak().size();j++) {
+				 if(s==w.getGakoak().get(j).getHitz()) {
+					 Hitza h=w.getGakoak().get(j);
+					 for(int k=0;k<h.getHWebList().size();k++) {
+						 System.out.println("        -"+h.getHWebList().get(k).getUrl());
+					 }
+				 }
+				 
+			 }
+		 }
 	 }
 }

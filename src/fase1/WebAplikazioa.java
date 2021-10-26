@@ -7,9 +7,11 @@ public class WebAplikazioa {
 
 
 	public static void main(String[] args) throws IOException {
-		//  SORTU ETA HASIERATU HIZTEGIA (Singleton)
-		//  SORTU ETA HASIERATU INTERNET (Singleton)
-		
+		Hiztegia h=Hiztegia.getInstance();
+		Internet i=Internet.getInstance();
+		String wd="C:\\Users\\ESDPC\\eclipse-workspace\\DEA Proiektua\\";
+		i.hasieratu(wd+"smallindex", wd+"smallpld-arc");
+		h.hasieratu(wd+"words.txt");
 		
 		
 		
@@ -24,7 +26,7 @@ public class WebAplikazioa {
 			switch(aukera) {
 			case 1: System.out.println("Sartu gako-hitz bat:");			        
 			        hitza=sc.nextLine();
-				// OSATU
+					i.webBilatzailea(hitza);
 				
 				
 				
@@ -32,6 +34,7 @@ public class WebAplikazioa {
 			default: break;
 			}
 		}
+		System.out.println("*******LogOut*******");
 		sc.close();
 
 	}

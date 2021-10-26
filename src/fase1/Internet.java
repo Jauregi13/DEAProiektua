@@ -7,33 +7,35 @@ import java.util.Scanner;
 public class Internet {
 	private static Internet nireInternet=null;
 	private WebenLista webList;
-	
-private Internet() {
+
+	private Internet() {
 		this.webList=new WebenLista();
 	}
-public static Internet getInstance(){
-	if(nireInternet==null) 
-		nireInternet=new Internet();
-	return nireInternet;
-}
+	public static Internet getInstance(){
+		if(nireInternet==null) 
+			nireInternet=new Internet();
+		return nireInternet;
+	}
+	
+	public WebenLista getLista() {
+		return this.webList;
+	}
 	/**
-	* Pasatako fitxategian dauden webak kargatzen ditu
+	 * Pasatako fitxategian dauden webak kargatzen ditu
 	 * @param fitxIzena: webak dauzkan fitxategiaren izena
 	 * @throws FileNotFoundException 
 	 */
 	private void webakKargatu(String fitxIzena) throws FileNotFoundException {
 		File f=new File(fitxIzena);
 		Scanner sc = new Scanner(f);
-        while(sc.hasNextLine()) {
-        	String webberria=sc.nextLine();
-		String[] parts=webberria.split("\\s+");
-		String in=parts[1];
-		System.out.println(in);
-		int index=Integer.parseInt(in);
-		Web web= new Web(index,parts[0]);
-		this.webList.webaErantsi(web);
-        }
-        sc.close();
+		while(sc.hasNextLine()) {
+			String webberria=sc.nextLine();
+			String[] parts=webberria.split("\\s+");
+			int index=Integer.parseInt(parts[1]);
+			Web web= new Web(index,parts[0]);
+			this.webList.webaErantsi(web);
+		}
+		sc.close();
 	}
 	// Ikusi hurrengo ataleko laguntza
 	/**
@@ -43,14 +45,14 @@ public static Internet getInstance(){
 	 */
 	private void estekakKargatu(String fitxIzena) throws FileNotFoundException {
 		Scanner sc = new Scanner(new File(fitxIzena));
-        while(sc.hasNextLine()) {
-        	String estberria=sc.nextLine();
-		String[] pfitxIzena=estberria.split("\\s+");
-		int indexJatorri=Integer.parseInt(pfitxIzena[0]);
-		int indexHelmuga=Integer.parseInt(pfitxIzena[1]);
-		this.webList.estekaErantsi(indexJatorri, indexHelmuga);
-        }
-        sc.close();
+		while(sc.hasNextLine()) {
+			String estberria=sc.nextLine();
+			String[] pfitxIzena=estberria.split("\\s+");
+			int indexJatorri=Integer.parseInt(pfitxIzena[0]);
+			int indexHelmuga=Integer.parseInt(pfitxIzena[1]);
+			this.webList.estekaErantsi(indexJatorri, indexHelmuga);
+		}
+		sc.close();
 	}
 	// Ikusi hurrengo ataleko laguntza
 	/**
@@ -62,26 +64,27 @@ public static Internet getInstance(){
 	public void hasieratu(String webenFitxIzena, String estekenFitxIzena) throws FileNotFoundException {
 		this.webakKargatu(webenFitxIzena);
 		this.estekakKargatu(estekenFitxIzena);
-        
+
 	}
 	/**
 	 * Hitz bati dagokion stringa emanda, pantailan inprimatzen ditu
 	 * gako-hitz hori duten webak
 	 * @param s: hitzari dagokion stringa
 	 */
-	 public void webBilatzailea(String s) {
-		 System.out.println(s+":");
-		 for(int i=0;i<this.webList.getLista().size();i++) {
-			 Web w=this.webList.getLista().get(i);
-			 for (int j=0;j<w.getGakoak().size();j++) {
-				 if(s==w.getGakoak().get(j).getHitz()) {
-					 Hitza h=w.getGakoak().get(j);
-					 for(int k=0;k<h.getHWebList().size();k++) {
-						 System.out.println("        -"+h.getHWebList().get(k).getUrl());
-					 }
-				 }
-				 
-			 }
-		 }
-	 }
+	public void webBilatzailea(String s) {
+		System.out.println(s+":");
+		Hitza hitz = new Hitza(s);
+		for(int i=0;i<this.webList.getLista().size();i++) {
+			Web w=this.webList.getLista().get(i);
+			for (int j=0;j<w.getGakoak().size();j++) {
+				if(w.gakoaDa(hitz)) {
+					hitz =w.getGakoak().get(j);
+					for(int k=0;k<hitz.getHWebList().size();k++) {
+						System.out.println("        -"+hitz.getHWebList().get(k).getUrl());
+					}
+				}
+
+			}
+		}
+	}
 }

@@ -9,7 +9,7 @@ public class WebAplikazioa {
 	public static void main(String[] args) throws IOException {
 		Hiztegia h=Hiztegia.getInstance();
 		Internet i=Internet.getInstance();
-		String wd="C:\\Users\\ESDPC\\eclipse-workspace\\DEA Proiektua\\";
+		String wd="fitxategiak\\";
 		i.hasieratu(wd+"smallindex", wd+"smallpld-arc");
 		h.hasieratu(wd+"words.txt");
 		

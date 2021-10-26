@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Hiztegia {
 	private static Hiztegia nireHiztegia;
-	private HitzenLista list;;
+	private HitzenLista list;
 	/**
 	 * Hiztegia kargatzen du emandako fitxategitik
 	 * @param fitxIzena: hiztegia daukan fitxategiaren izena
@@ -24,9 +24,9 @@ public class Hiztegia {
 	private void hitzakKargatu(String fitxIzena) throws FileNotFoundException {
 		Scanner sc = new Scanner(new File(fitxIzena));
         while(sc.hasNextLine()) {
-        	String h_=sc.nextLine();
-        	Hitza h=new Hitza(h_);
-        	this.list.hitzaGehitu(h);
+        	String h=sc.nextLine();
+        	Hitza hitz=new Hitza(h);
+        	this.list.hitzaGehitu(hitz);
         }
         sc.close();
 	}
@@ -37,10 +37,25 @@ public class Hiztegia {
 	 * Aurre: Internet eta hiztegia kargatuta daude jadanik
 	 */
 	private void hitzenWebakKonputatu() {
-		for (int i=0;i<this.list.getLista().size();i++) {
-			System.out.println(this.list.getLista().get(i)+" :");
-			for (int j=0;j<this.list.getLista().get(i).getHWebList().size();j++)
-				System.out.println("       *"+this.list.getLista().get(i).getHWebList().get(j));
+		
+		Internet in = Internet.getInstance();
+		WebenLista wLista = in.getLista();
+		for (Hitza hitza : list.getLista()) {
+			
+			for (Web web : wLista.getLista()) {
+				
+				for (int i = 0; i < web.getUrl().length()-9; i++) {
+					
+					for (int j = 4; j < web.getUrl().length() || j < 10; j++) {
+						
+						 String webZatitu = web.getUrl().substring(i, j);
+						 
+						 if(webZatitu.equals(hitza)) {
+							 web.gakoaDa(hitza);
+						 }
+					}
+				}
+			}
 		}
 	}
 	// Ikusi hurrengo ataleko laguntza

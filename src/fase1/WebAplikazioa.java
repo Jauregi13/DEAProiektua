@@ -28,8 +28,6 @@ public class WebAplikazioa {
 			        hitza=sc.nextLine();
 					i.webBilatzailea(hitza);
 				
-				
-				
 				    break;
 			default: break;
 			}

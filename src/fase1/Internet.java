@@ -72,19 +72,24 @@ public class Internet {
 	 * @param s: hitzari dagokion stringa
 	 */
 	public void webBilatzailea(String s) {
+		
 		System.out.println(s+":");
 		Hitza hitz = new Hitza(s);
-		for(int i=0;i<this.webList.getLista().size();i++) {
-			Web w=this.webList.getLista().get(i);
-			for (int j=0;j<w.getGakoak().size();j++) {
-				if(w.gakoaDa(hitz)) {
-					hitz =w.getGakoak().get(j);
-					for(int k=0;k<hitz.getHWebList().size();k++) {
-						System.out.println("        -"+hitz.getHWebList().get(k).getUrl());
+		
+		if(hitz.getSize()>=4 && hitz.getSize()<=10) {
+			for(int i=0;i<this.webList.getLista().size();i++) {
+				Web w=this.webList.getLista().get(i);
+				for (int j=0;j<w.getGakoak().size();j++) {
+					if(w.gakoaDa(hitz)) {
+						hitz =w.getGakoak().get(j);
+						for(int k=0;k<hitz.getHWebList().size();k++) {
+							System.out.println("        -"+hitz.getHWebList().get(k).getUrl());
+						}
 					}
 				}
-
 			}
+		}else {
+			System.out.println("Hitza Txikiegia edo haundiegia da. 4-10 tarteko bat jarri mesedez");
 		}
 	}
 }

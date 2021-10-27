@@ -40,19 +40,25 @@ public class Hiztegia {
 		
 		Internet in = Internet.getInstance();
 		WebenLista wLista = in.getLista();
+		
 		for (Hitza hitza : list.getLista()) {
 			
-			for (Web web : wLista.getLista()) {
+			int c = hitza.getSize();
+			
+			if(c>=4) {
+			
+				for (Web web : wLista.getLista()) {
 				
-				for (int i = 0; i < web.getUrl().length()-9; i++) {
+					for (int i = 0; i < web.getUrl().length()-c; i++) {
 					
-					for (int j = 4; j < web.getUrl().length() || j < 10; j++) {
-						
-						 String webZatitu = web.getUrl().substring(i, j);
+						int k = i+c;
+
+							String webZatitu = web.getUrl().substring(i, k);
 						 
-						 if(webZatitu.equals(hitza)) {
-							 web.gakoaDa(hitza);
-						 }
+							if(webZatitu.equals(hitza)) {
+									web.gakoaDa(hitza);
+							}
+							k++;
 					}
 				}
 			}

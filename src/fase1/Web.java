@@ -37,12 +37,11 @@ public class Web {
 	}
 	public boolean gakoaDa(Hitza h) {
 		boolean gakoa=false;
-		if(h.getSize()>=4 && h.getSize()<=10) {
-			if(this.getUrl().contains(h.getHitz())) {
-				this.gakoak.add(h);
-				h.addGakoHitz(this);
-				gakoa=true;
-			}
+		
+		if(this.getUrl().contains(h.getHitz())) {
+			this.gakoak.add(h);
+			h.addGakoHitz(this);
+			gakoa=true;
 		}
 		return gakoa;
 	}
